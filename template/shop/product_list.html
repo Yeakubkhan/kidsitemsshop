@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block item %}
+<h1 class="text-center mt-5">Welcome to Kids Items Shop</h1>
+
+<div class="container mt-4">
+<div class="row">
+{% for item in products %}               
+<div class="card mb-5" style="max-width: 720px; margin:auto;">
+  <div class="row g-0">
+
+    <!-- Image Carousel -->
+    <div class="col-md-6">
+      {% if item.images.all %}
+      <div id="carousel{{ forloop.counter }}" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          {% for img in item.images.all %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ item.name }}">
+          </div>
+          {% endfor %}
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ forloop.counter }}" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ forloop.counter }}" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+      <!-- Thumbnails -->
+      <div class="d-flex mt-2 justify-content-center">
+        {% for img in item.images.all %}
+        <img src="{{ img.image.url }}" class="img-thumbnail mx-1" style="width:60px; cursor:pointer;" onclick="document.querySelector('#carousel{{ forloop.parentloop.counter }} .carousel-inner .active').classList.remove('active'); this.parentElement.parentElement.querySelector('.carousel-inner').children[{{ forloop.counter0 }}].classList.add('active');">
+        {% endfor %}
+      </div>
+      {% else %}
+        <p>No images uploaded for this product.</p>
+      {% endif %}
+    </div>
+
+    <!-- Product Details -->
+    <div class="col-md-6">
+      <div class="card-body">
+        <h5 class="card-title">{{ item.name }}</h5>
+        <p class="card-text">{{ item.description }}</p>
+        <p class="card-text"><small class="text-body-secondary">Last updated {{ item.uploaded_at }}</small></p>
+        <p class="card-text"><strong>Price: BDT {{ item.price }}</strong></p>
+        <a href="#" class="btn btn-primary">Order Now</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}
