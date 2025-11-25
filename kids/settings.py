@@ -18,6 +18,12 @@ ALLOWED_HOSTS = [
     'kidsitemsshop.onrender.com'
 ]
 
+ALLOWED_HOSTS = ['*']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://kidsitemsshop.onrender.com'
+]
+
 
 # ----------------------- #
 #   INSTALLED APPS
