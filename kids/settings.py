@@ -15,7 +15,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     # এখানে তোমার Render Domain যোগ হবে, deploy করার পর
-    'your-render-app-name.onrender.com'
+    'kidsitemsshop.onrender.com'
 ]
 
 
