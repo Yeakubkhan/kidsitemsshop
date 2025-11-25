@@ -11,16 +11,8 @@ SECRET_KEY = 'django-insecure-fyo7c1cotw%oh$@qakqgtz#wkg3cj997b8b7&y#7jy)kuu6g2c
 
 DEBUG = False   # Render এ DEBUG off রাখতে হবে
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1',
-    # এখানে তোমার Render Domain যোগ হবে, deploy করার পর
-    'kidsitemsshop.onrender.com'
-]
+ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://kidsitemsshop.onrender.com'
-]
 
 
 # ----------------------- #
