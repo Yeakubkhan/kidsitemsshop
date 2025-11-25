@@ -5,44 +5,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kids Items Shop</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            padding-top: 70px; /* navbar height adjustment */
+        }
+    </style>
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<!-- Fixed Navbar -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
   <div class="container-fluid">
-     <img src="{% static "image/logo.png" %}" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+     <img src="{% static 'image/logo.png' %}" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url "product_list" %}">Home</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'product_list' %}">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+          <a class="nav-link active" href="https://wa.me/+8801876393697">Contact Us</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="{% url 'product_list' %}">Order Status</a></li>
+            <li><a class="dropdown-item" href="{% url 'about' %}">About us</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="{% url 'privacy_policy' %}">Privacy & Policy</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+
+      <!-- Search Form -->
+      <form class="d-flex" method="GET" action="{% url 'search' %}">
+        <input name="q" class="form-control me-2" type="search" placeholder="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+
     </div>
   </div>
 </nav>
@@ -57,7 +65,64 @@
     
     
     
-    
+<!-- Font Awesome CDN (Must include in <head>) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- Footer -->
+<footer class="text-center text-light py-4" style="background:#0D1B2A;">
+    <div class="container">
+
+        <h5 class="mb-2">Kids Items Shop</h5>
+        <p class="mb-3">
+            Premium Baby Items • Fast Delivery • Reliable Service
+        </p>
+
+        <!-- Social Icons -->
+        <div class="mb-3">
+
+            <!-- WhatsApp Icon -->
+            <a href="https://wa.me/+8801876393697" target="_blank" 
+               class="text-light mx-2" style="font-size:28px;">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+
+            <!-- Facebook Icon -->
+            <a href="https://facebook.com/yourpage" target="_blank" 
+               class="text-light mx-2" style="font-size:28px;">
+                <i class="fab fa-facebook"></i>
+            </a>
+
+            <!-- TikTok Icon -->
+            <a href="#" target="_blank" 
+               class="text-light mx-2" style="font-size:28px;">
+                <i class="fab fa-tiktok"></i>
+            </a>
+        </div>
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'product_list' %}" class="text-white text-decoration-none">Home</a></li>
+                    <li><a href="{% url "about" %}" class="text-white text-decoration-none">About Us</a></li>
+                    <li><a href="https://wa.me/+8801876393697" class="text-white text-decoration-none">Contact</a></li>
+                    <li><a href="#" class="text-white text-decoration-none">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <h5>Contact Info</h5>
+                <p>📞 +880 1876393697</p>
+                <p>📧 kidsitems795@gmail.com</p>
+                <p>📍 Dhaka, Bangladesh</p>
+            </div>
+        </div>
+
+        <small>© 2025 Kids Items Shop — All Rights Reserved</small>
+    </div>
+</footer>
+
+
     
     
     

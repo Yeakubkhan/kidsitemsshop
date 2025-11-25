@@ -12,13 +12,13 @@
                         {% csrf_token %}
 
                 <div class="mb-3">
-                    <label>Product</label>
+                    <label>প্রোডাক্টের নাম </label>
                     <input type="text" value="{{ product.name }}" disabled class="form-control mb-2">
                     <input type="hidden" name="product" value="{{ product.name }}">
                 </div>
 
                 <div class="mb-3">
-                    <label>Price (per item)</label>
+                    <label> প্রতি পিছ এর দাম </label>
                     <input id="price" type="number" value="{{ product.price }}" disabled class="form-control mb-2">
                     <input type="hidden" name="price" value="{{ product.price }}">
                 </div>
@@ -31,12 +31,12 @@
                     <div class="mb-3">{{ form.color }}</div>
 
                 <div class="mb-3">
-                    <label>Quantity</label>
+                    <label>কত পিছ </label>
                     <input id="qty" name="quantity" type="number" value="1" min="1" class="form-control mb-2">
                 </div>
                    
                 <div class="mb-3">
-                    <label>Total Price</label>
+                    <label>মোট দামের সাথে ডেলিভারি চার্জ ১১০ টাকা অ্যাড হয়েছে</label>
                     <input id="total" name="total_price" type="number" readonly class="form-control mb-3">
                 </div>
 
@@ -53,7 +53,11 @@
     function updateTotal() {
         let price = parseFloat(document.getElementById("price").value);
         let qty = parseInt(document.getElementById("qty").value);
-        document.getElementById("total").value = price * qty;
+
+        let subtotal = price * qty;
+        let delivery = 110; // Delivery charge fixed
+
+        document.getElementById("total").value = subtotal + delivery;
     }
 
     document.getElementById("qty").addEventListener("input", updateTotal);

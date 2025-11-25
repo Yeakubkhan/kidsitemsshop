@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block item %}
+<h1 class="text-center mt-5">{{ product.name }}</h1>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+      {% if product.images.all %}
+      <div id="carouselProduct" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          {% for img in product.images.all %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ product.name }}">
+          </div>
+          {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProduct" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselProduct" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      {% else %}
+        <p>No images available for this product.</p>
+      {% endif %}
+    </div>
+    <div class="col-md-6">
+      <h5>{{ product.subtitle }}</h5>
+      <p>{{ product.description }}</p>
+      <p>{{ product.color }}</p>
+      <p>Available Sizes: {{ product.size }}</p>
+        <p><small class="text-body-secondary">Last updated {{ product.uploaded_at }}</small></p>
+      <p><strong>Price: BDT {{ product.price }}</strong></p>
+      <a href="{% url "order_confirmation" %}?product={{ product.id }}" class="btn btn-primary">Order Now</a>
+    </div>
+  </div>
+</div>
+<br><br>
+{% endblock %}

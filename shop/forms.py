@@ -11,13 +11,13 @@ class OrderForm(forms.ModelForm):
 
 
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Name'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Phone Number'}),
-            'address': forms.Textarea(attrs={'class': 'form-control', 'placeholder': '  Your Address', 'rows': 3}),
-            'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your City'}),
-            'district': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your District'}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'নাম লিখুন'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '  আপনার সচল মোবাইল নাম্বার'}),
+            'address': forms.Textarea(attrs={'class': 'form-control', 'placeholder': '  গ্রাম/ঠিকানা', 'rows': 2}),
+            'city': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'আপনার থানা'}),
+            'district': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'আপনার জেলা'}),
             'product': forms.Select(attrs={'class': 'form-control'}),
             'quantity': forms.NumberInput(attrs={'class': 'form-control', 'min': 1}),
-            'color': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Preferred Color'}),
-            'total_price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Total Price'}),
+            'color': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'পছন্দের কালার টি/কালার গুলো লিখুন'}),
+            'total_price': forms.NumberInput(attrs={'class': 'form-control', }),
         }

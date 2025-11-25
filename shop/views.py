@@ -11,11 +11,23 @@ def product_list(request):
 # Product Detail Page (with multiple images)
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    return render(request, "product_detail.html", {"product": product})
+    return render(request, "shop/product_detail.html", {"product": product})
+
+
+
+def search(request):
+    
+
+    query = request.GET.get("q", "")
+    results = Product.objects.filter(name__icontains=query) if query else []
+    return render(request, "shop/search.html", {"query": query, "results": results,})
+
+
 
 
 # Order Confirmation Page
 def order_confirmation(request):
+    
     product_id = request.GET.get('product')
     product = get_object_or_404(Product, pk=product_id)
     
@@ -35,3 +47,11 @@ def order_confirmation(request):
 
      
     
+from django.shortcuts import render, get_object_or_404
+from .models import Order
+
+def about(request):
+    return render(request, "shop/about.html")
+
+def privacy_policy(request):
+    return render(request, "shop/privacy_policy.html")

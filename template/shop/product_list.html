@@ -34,7 +34,7 @@
       <!-- Thumbnails -->
       <div class="d-flex mt-2 justify-content-center">
         {% for img in item.images.all %}
-        <img src="{{ img.image.url }}" class="img-thumbnail mx-1" style="width:60px; cursor:pointer;" onclick="document.querySelector('#carousel{{ forloop.parentloop.counter }} .carousel-inner .active').classList.remove('active'); this.parentElement.parentElement.querySelector('.carousel-inner').children[{{ forloop.counter0 }}].classList.add('active');">
+        <img src="{{ img.image.url }}" class="img-thumbnail mx-1" style="width:60px; cursor:pointer;" onclick="document.querySelector('#carousel{{ forloop.parentloop.counter }} .carousel-inner .active').classList.remove('active'); this.parentElement.parentElement.querySelector('.carousel-inner').children[{{ forloop.counter0 }}].classList.add('active');" >
         {% endfor %}
       </div>
       {% else %}
@@ -45,17 +45,26 @@
     <!-- Product Details -->
     <div class="col-md-6">
       <div class="card-body">
-        <h5 class="card-title">{{ item.name }}</h5>
-        <p class="card-text">{{ item.description }}</p>
+        <h3 class="card-title">{{ item.name }}</h3>
+        <h6 class="card-text">{{ item.subtitle }}</h6>
         <p class="card-text"><small class="text-body-secondary">Last updated {{ item.uploaded_at }}</small></p>
         <p class="card-text"><strong>Price: BDT {{ item.price }}</strong></p>
-        <a href="{% url "order_confirmation" %}?product={{ item.id }}" class="btn btn-primary">Order Now</a>
+        
       </div>
     </div>
-
+          
+            <div class="d-grid gap-2">
+              <div class="mb-2">
+              <div class="text-center">
+              <a href="{% url "product_detail" pk=item.pk %}?product={{ item.id }}" class="btn btn-primary">View Details</a>
+              </div>
+              </div>
+            </div>
+          <br>
   </div>
 </div>
 {% endfor %}
+</div>
 </div>
 
 {% endblock %}

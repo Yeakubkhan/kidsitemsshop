@@ -2,11 +2,42 @@
 
 {% block item %}
 
-
-
-<p>Success full order placed. </p>
-
-
-<a href="{% url 'product_list' %}">Continue Shopping</a>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h4 class='mb-0'>Order Confirmation</h4>
+            </div>
+            <div class="card-body">
+                <p>ধন্যবাদ, {{ order.name }}! আপনার অর্ডার টি আমাদের কাছে এসেছে। </p>
+                <p>১ থেকে ১২ ঘন্টার ভিতরে আপনার নাম্বারে কল দিয়ে অর্ডার টি কনর্ফাম করা হবে!</p>
+                <p>আপনার অর্ডার বিস্তারিত নিচে দেওয়া হলো:</p>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item">
+                        <strong>Product:</strong> {{ order.product }}   
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Quantity:</strong> {{ order.quantity }}   
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Total Price:</strong> {{ order.total_price }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Delivery Address:</strong> {{ order.address }}, {{ order.city }}, {{ order.district }}  
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Contact Phone:</strong> {{ order.phone }}
+                    </li>
+                </ul>
+                <p>আপনার অর্ডারটি ৩ থেকে ৫ দিন সময় এর ভিতর পৌঁছে যাবে।</p>
+                <p>যদি আপনার কোন প্রশ্ন বা উদ্বেগ থাকে, অনুগ্রহ করে আমাদের সাথে যোগাযোগ করুন।</p> 
+            </div> <br>
+        <div class="text-center">
+            <a href="{% url 'product_list' %}" class="btn btn-primary">Continue Shopping</a>
+        </div><br>
+        </div>
+    </div>
+</div>
+<br><br>
 
 {% endblock %}

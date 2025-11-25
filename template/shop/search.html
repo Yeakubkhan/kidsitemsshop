@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block item %}
+
+<div class="container my-4">
+
+    <h3 class="mb-3">Search Results for: "{{ query }}"</h3>
+    <hr>
+
+    {% if results %}
+        <div class="row">
+            {% for product in results %}
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm">
+ <div class="col-md-6">
+      {% if product.images.all %}
+      <div id="carouselProduct" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          {% for img in product.images.all %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ product.name }}">
+          </div>
+          {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProduct" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselProduct" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      {% else %}
+        <p>No images available for this product.</p>
+      {% endif %}
+    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+
+                        <p class="card-text text-success fw-bold">
+                            {{ product.price }} Tk
+                        </p>
+
+                        <a href="{% url 'product_detail' product.pk %}" class="btn btn-primary btn-sm">
+                            View Details
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <p class="text-danger">No products found.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}
