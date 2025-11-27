@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "cloudinary_storage",
 ]
 
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 # ----------------------- #
 #   MIDDLEWARE
 # ----------------------- #
