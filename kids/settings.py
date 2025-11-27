@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -7,13 +8,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #   SECURITY & DEBUG
 # ----------------------- #
 
-SECRET_KEY = 'django-insecure-fyo7c1cotw%oh$@qakqgtz#wkg3cj997b8b7&y#7jy)kuu6g2c'
-
-DEBUG = False   # Render এ DEBUG off রাখতে হবে
-
+SECRET_KEY = 'django-insecure-!your-secret-key-here!'
+DEBUG = True
 ALLOWED_HOSTS = ['*']
-
-
 
 # ----------------------- #
 #   INSTALLED APPS
@@ -27,9 +24,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Your apps
     'shop',
-]
 
+    # S3 storage
+    'storages',
+]
 
 # ----------------------- #
 #   MIDDLEWARE
@@ -37,8 +37,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
-    # Render এ static serve করতে WHITENOISE দরকার
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -49,9 +47,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
 ROOT_URLCONF = 'kids.urls'
-
 
 # ----------------------- #
 #   TEMPLATES
@@ -60,7 +56,7 @@ ROOT_URLCONF = 'kids.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'template'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,22 +68,18 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'kids.wsgi.application'
 
-
 # ----------------------- #
-#   DATABASE
+#   DATABASES
 # ----------------------- #
 
-# Render automatically replaces this when you use PostgreSQL
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR}/db.sqlite3",
+        conn_max_age=600
+    )
 }
-
 
 # ----------------------- #
 #   PASSWORD VALIDATION
@@ -100,7 +92,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
 # ----------------------- #
 #   TIME & LANG
 # ----------------------- #
@@ -110,27 +101,31 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-
 # ----------------------- #
-#   STATIC FILES (CSS, JS)
+#   STATIC FILES
 # ----------------------- #
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Whitenoise settings for production
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
 # ----------------------- #
-#   MEDIA FILES
+#   MEDIA FILES (S3)
 # ----------------------- #
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
+# Use S3 in production, fallback to local media in dev
+if DEBUG:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+else:
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME', 'us-east-1')
+    AWS_QUERYSTRING_AUTH = False
+    MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/'
 
 # ----------------------- #
 #   DEFAULT AUTOFIELD
