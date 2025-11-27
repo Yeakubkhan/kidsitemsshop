@@ -34,6 +34,8 @@ INSTALLED_APPS = [
 
     # S3 storage
     'storages',
+    "cloudinary",
+    "cloudinary_storage",
 ]
 
 # ----------------------- #
@@ -105,6 +107,18 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
+
+
+
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+# Cloudinary credentials from environment variables
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ.get("shop"),
+    "API_KEY": os.environ.get("525535723275894"),
+    "API_SECRET": os.environ.get("l7SGe7cpOszd82aK8h8AAxfGHBg"),
+}
 
 # ----------------------- #
 #   STATIC FILES
