@@ -34,10 +34,12 @@ INSTALLED_APPS = [
 
     # S3 storage
     'storages',
+]
+
+INSTALLED_APPS += [
     "cloudinary",
     "cloudinary_storage",
 ]
-
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 # ----------------------- #
