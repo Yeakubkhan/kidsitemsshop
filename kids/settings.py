@@ -12,6 +12,11 @@ SECRET_KEY = 'django-insecure-!your-secret-key-here!'
 DEBUG = False
 ALLOWED_HOSTS = ['*']
 
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://kidsitemshop-production.up.railway.app",
+]
+
 # ----------------------- #
 #   INSTALLED APPS
 # ----------------------- #
