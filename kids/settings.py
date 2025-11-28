@@ -13,9 +13,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ----------------------- #
 #   SECURITY & DEBUG
 # ----------------------- #
-SECRET_KEY = 'django-insecure-!your-secret-key-here!'
-DEBUG = False
-ALLOWED_HOSTS = ['*']
+SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key")
+DEBUG = os.environ.get("DEBUG", "False") == "True"
+ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://kidsitemshop-production.up.railway.app",
@@ -32,13 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Your apps
     'shop',
-
-    # S3 storage
     'storages',
-
-    # Cloudinary
     "cloudinary",
     "cloudinary_storage",
 ]
@@ -91,24 +86,6 @@ DATABASES = {
 }
 
 # ----------------------- #
-#   PASSWORD VALIDATION
-# ----------------------- #
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
-
-# ----------------------- #
-#   TIME & LANGUAGE
-# ----------------------- #
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
-
-# ----------------------- #
 #   STATIC FILES
 # ----------------------- #
 STATIC_URL = '/static/'
@@ -117,27 +94,18 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ----------------------- #
-#   MEDIA FILES
-# ----------------------- #
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-# ----------------------- #
-#   CLOUDINARY SETTINGS
+#   MEDIA FILES (Cloudinary)
 # ----------------------- #
 cloudinary.config(
-    cloud_name="dlfr1kfqa",
-    api_key="525535723275894",
-    api_secret="l7SGe7cpOszd82aK8h8AAxfGHBg"
+    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.environ.get("CLOUDINARY_API_KEY"),
+    api_secret=os.environ.get("CLOUDINARY_API_SECRET")
 )
 
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": "dlfr1kfqa",
-    "API_KEY": "525535723275894",
-    "API_SECRET": "l7SGe7cpOszd82aK8h8AAxfGHBg",
-}
-
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # ----------------------- #
 #   DEFAULT AUTO FIELD
