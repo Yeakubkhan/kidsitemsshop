@@ -1,29 +1,26 @@
 from pathlib import Path
-import os
 import dj_database_url
-import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-# ----------------------- #
-#   BASE DIRECTORY
-# ----------------------- #
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ----------------------- #
-#   SECURITY & DEBUG
-# ----------------------- #
-SECRET_KEY = os.environ.get("SECRET_KEY", "fallback-secret-key")
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+# ---------------------------
+# SECURITY
+# ---------------------------
+SECRET_KEY = "django-insecure-key"
+DEBUG = False
 ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://kidsitemshop-production.up.railway.app",
+    "https://kidsitemshop-production.up.railway.app/",
 ]
 
-# ----------------------- #
-#   INSTALLED APPS
-# ----------------------- #
+# ---------------------------
+# INSTALLED APPS
+# ---------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -33,14 +30,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'shop',
-    'storages',
-    "cloudinary",
-    "cloudinary_storage",
+    'cloudinary',
+    'cloudinary_storage',
+
 ]
 
-# ----------------------- #
-#   MIDDLEWARE
-# ----------------------- #
+# ---------------------------
+# MIDDLEWARE
+# ---------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -50,14 +47,13 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'kids.urls'
 
-# ----------------------- #
-#   TEMPLATES
-# ----------------------- #
+# ---------------------------
+# TEMPLATES
+# ---------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -75,9 +71,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'kids.wsgi.application'
 
-# ----------------------- #
-#   DATABASES
-# ----------------------- #
+# ---------------------------
+# DATABASE
+# ---------------------------
 DATABASES = {
     'default': dj_database_url.config(
         default=f"sqlite:///{BASE_DIR}/db.sqlite3",
@@ -85,29 +81,32 @@ DATABASES = {
     )
 }
 
-# ----------------------- #
-#   STATIC FILES
-# ----------------------- #
+# ---------------------------
+# STATIC FILES
+# ---------------------------
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# ----------------------- #
-#   MEDIA FILES (Cloudinary)
-# ----------------------- #
-cloudinary.config(
-    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    api_key=os.environ.get("CLOUDINARY_API_KEY"),
-    api_secret=os.environ.get("CLOUDINARY_API_SECRET")
-)
 
+
+MEDIA_URL = "/media/"
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dlfr1kfqa',
+    'API_KEY': '798444638744245',
+    'API_SECRET': 'uoiNU8bdvL6lvRW5_Pu4QeIkyLM'
+}
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-# ----------------------- #
-#   DEFAULT AUTO FIELD
-# ----------------------- #
+# ---------------------------
+# DEFAULT AUTO FIELD
+# ---------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+import cloudinary
+cloudinary.config(
+    cloud_name="dlfr1kfqa",
+    api_key="798444638744245",
+    api_secret="uoiNU8bdvL6lvRW5_Pu4QeIkyLM"
+)
