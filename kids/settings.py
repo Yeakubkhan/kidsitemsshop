@@ -15,7 +15,7 @@ DEBUG = False
 ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://kidsitemshop-production.up.railway.app/",
+    "https://*.up.railway.app/",
 ]
 
 # ---------------------------
