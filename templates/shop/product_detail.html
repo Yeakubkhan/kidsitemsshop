@@ -2,41 +2,161 @@
 
 {% block item %}
 <h1 class="text-center mt-5">{{ product.name }}</h1>
+
 <div class="container mt-4">
   <div class="row">
+
+    <!-- Left: Image -->
     <div class="col-md-6">
+
       {% if product.images.all %}
       <div id="carouselProduct" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           {% for img in product.images.all %}
           <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ product.name }}">
+            <img src="{{ img.image.url }}" class="d-block w-100 rounded preview-img"
+                 style="height:320px; object-fit:cover; cursor:pointer;"
+                 data-full="{{ img.image.url }}">
           </div>
           {% endfor %}
         </div>
+
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselProduct" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
+          <span class="carousel-control-prev-icon"></span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselProduct" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
+          <span class="carousel-control-next-icon"></span>
         </button>
       </div>
+
+      <!-- Thumbnails -->
+      <div class="d-flex mt-2 justify-content-center">
+        {% for img in product.images.all %}
+        <img src="{{ img.image.url }}"
+             class="img-thumbnail mx-1 preview-img"
+             style="width:60px; height:60px; object-fit:cover; cursor:pointer;"
+             data-full="{{ img.image.url }}">
+        {% endfor %}
+      </div>
       {% else %}
-        <p>No images available for this product.</p>
+      <p>No images available for this product.</p>
       {% endif %}
+
     </div>
+
+    <!-- Right: Details -->
     <div class="col-md-6">
-      <h5>{{ product.subtitle }}</h5>
-      <p>{{ product.description }}</p>
-      <p>{{ product.color }}</p>
-      <p>Available Sizes: {{ product.size }}</p>
-        <p><small class="text-body-secondary">Last updated {{ product.uploaded_at }}</small></p>
-      <p><strong>Price: BDT {{ product.price }}</strong></p>
-      <a href="{% url "order_confirmation" %}?product={{ product.id }}" class="btn btn-primary">Order Now</a>
+
+      <h5 class="mt-3">{{ product.subtitle }}</h5>
+
+     <!-- Short Description (2 lines) -->
+<p id="shortDesc" style="
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    max-height: 3.2em;
+    cursor: pointer;
+">
+    {{ product.description }}
+</p>
+
+<!-- Full Description Modal -->
+<div class="modal fade" id="fullDescModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ product.name }} - Full Description</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>{{ product.description }}</p>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- JS to handle click -->
+<script>
+document.getElementById('shortDesc').addEventListener('click', function() {
+    var modal = new bootstrap.Modal(document.getElementById('fullDescModal'));
+    modal.show();
+});
+</script>
+
+
+      <p><strong>Color:</strong> {{ product.color }}</p>
+      <p><strong>Available Sizes:</strong> {{ product.size }}</p>
+      <p><small class="text-muted">Last updated {{ product.uploaded_at }}</small></p>
+
+      <!-- Price -->
+      <div style="margin-top:15px;">
+        {% if product.old_price %}
+        <span style="
+          font-size:18px;
+          color:#888;
+          text-decoration: line-through;
+          margin-right:10px;
+        ">
+          BDT {{ product.old_price }}
+        </span>
+        {% endif %}
+
+        <span style="
+          background:#ff007a;
+          color:white;
+          padding:8px 18px;
+          border-radius:25px;
+          font-size:22px;
+          font-weight:700;
+          box-shadow:0 4px 10px rgba(255,0,120,.25);
+        ">
+          BDT {{ product.price }}
+        </span>
+      </div>
+
+      <div class="mt-4 d-flex gap-2">
+  <a href="{% url 'order_confirmation' %}?product={{ product.id }}"
+     class="btn btn-primary btn-lg flex-grow-1 rounded-pill">
+    Order Now
+  </a>
+  <a href="{% url 'product_list' %}"
+     class="btn btn-secondary btn-lg flex-grow-1 rounded-pill">
+    Not Now
+  </a>
+</div>
+
+
+    </div>
+
+  </div>
+</div>
+
 <br><br>
+
+
+<!-- ⭐ FULL IMAGE PREVIEW MODAL ⭐ -->
+<div class="modal fade" id="imagePreviewModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-dark">
+      <div class="modal-body text-center p-2">
+        <img id="previewImage" src="" class="img-fluid rounded">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- JS to handle image click -->
+<script>
+document.querySelectorAll('.preview-img').forEach(img => {
+    img.addEventListener('click', function() {
+        let fullImg = this.getAttribute('data-full');
+        document.getElementById('previewImage').src = fullImg;
+        let modal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+        modal.show();
+    });
+});
+</script>
+
 {% endblock %}

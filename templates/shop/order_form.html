@@ -1,67 +1,75 @@
 {% extends "base.html" %}
 
 {% block item %}
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
-                    <h4 class='mb-0'>Order Form</h4>
-                </div>
-                <div class="card-body">
-                    <form method="POST">
-                        {% csrf_token %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-lg border-0 rounded-4">
+      
+      <!-- Card Header -->
+      <div class="card-header bg-primary text-white text-center rounded-top-4">
+        <h4 class="mb-0">Order Form</h4>
+      </div>
+      
+      <!-- Card Body -->
+      <div class="card-body p-4">
+        <form method="POST">
+          {% csrf_token %}
 
-                <div class="mb-3">
-                    <label>প্রোডাক্টের নাম </label>
-                    <input type="text" value="{{ product.name }}" disabled class="form-control mb-2">
-                    <input type="hidden" name="product" value="{{ product.name }}">
-                </div>
+          <!-- Product Name -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">প্রোডাক্টের নাম</label>
+            <input type="text" value="{{ product.name }}" disabled class="form-control mb-2">
+            <input type="hidden" name="product" value="{{ product.name }}">
+          </div>
 
-                <div class="mb-3">
-                    <label> প্রতি পিছ এর দাম </label>
-                    <input id="price" type="number" value="{{ product.price }}" disabled class="form-control mb-2">
-                    <input type="hidden" name="price" value="{{ product.price }}">
-                </div>
+          <!-- Price per Piece -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">প্রতি পিসের দাম</label>
+            <input id="price" type="number" value="{{ product.price }}" disabled class="form-control mb-2">
+            <input type="hidden" name="price" value="{{ product.price }}">
+          </div>
 
-                    <div class="mb-3">{{ form.name }}</div>
-                    <div class="mb-3">{{ form.phone }}</div>
-                    <div class="mb-3">{{ form.address }}</div>
-                    <div class="mb-3">{{ form.city }}</div>
-                    <div class="mb-3">{{ form.district }}</div>
-                    <div class="mb-3">{{ form.color }}</div>
+          <!-- User Info Fields -->
+          <div class="mb-3">{{ form.name }}</div>
+          <div class="mb-3">{{ form.phone }}</div>
+          <div class="mb-3">{{ form.address }}</div>
+          <div class="mb-3">{{ form.city }}</div>
+          <div class="mb-3">{{ form.district }}</div>
+          <div class="mb-3">{{ form.color }}</div>
 
-                <div class="mb-3">
-                    <label>কত পিছ </label>
-                    <input id="qty" name="quantity" type="number" value="1" min="1" class="form-control mb-2">
-                </div>
-                   
-                <div class="mb-3">
-                    <label>মোট দামের সাথে ডেলিভারি চার্জ ১১০ টাকা অ্যাড হয়েছে</label>
-                    <input id="total" name="total_price" type="number" readonly class="form-control mb-3">
-                </div>
+          <!-- Quantity -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">কত পিস</label>
+            <input id="qty" name="quantity" type="number" value="1" min="1" class="form-control">
+          </div>
 
-                <div class="mb-3">
-                    <button type="submit" class="btn btn-success mt-2">Order Now</button>
-                </div>
+          <!-- Total Price -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">মোট দাম (ডেলিভারি চার্জ ১১০ টাকা অন্তর্ভুক্ত)</label>
+            <input id="total" name="total_price" type="number" readonly class="form-control bg-light fw-bold">
+          </div>
 
-                </form>
-            </div>
-        </div>               
+          <!-- Submit -->
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-success btn-lg rounded-pill">Order Now</button>
+          </div>
+
+        </form>
+      </div>
     </div>
+  </div>
+</div>
 
+<!-- JS: Total Price Calculation -->
 <script>
-    function updateTotal() {
-        let price = parseFloat(document.getElementById("price").value);
-        let qty = parseInt(document.getElementById("qty").value);
+function updateTotal() {
+    let price = parseFloat(document.getElementById("price").value) || 0;
+    let qty = parseInt(document.getElementById("qty").value) || 1;
+    let delivery = 110;
+    document.getElementById("total").value = (price * qty) + delivery;
+}
 
-        let subtotal = price * qty;
-        let delivery = 110; // Delivery charge fixed
-
-        document.getElementById("total").value = subtotal + delivery;
-    }
-
-    document.getElementById("qty").addEventListener("input", updateTotal);
-    updateTotal();
+document.getElementById("qty").addEventListener("input", updateTotal);
+updateTotal();
 </script>
-
 {% endblock %}

@@ -1,70 +1,81 @@
 {% extends "base.html" %}
 
 {% block item %}
-<h1 class="text-center mt-5">Welcome to Kids Items Shop</h1>
+<h1 class="text-center mt-5 mb-4">Welcome to Kids Items Shop</h1>
 
-<div class="container mt-4">
-<div class="row">
-{% for item in products %}               
-<div class="card mb-5" style="max-width: 720px; margin:auto;">
-  <div class="row g-0">
+<div class="container">
+  <div class="row">
 
-    <!-- Image Carousel -->
-    <div class="col-md-6">
-      {% if item.images.all %}
-      <div id="carousel{{ forloop.counter }}" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          {% for img in item.images.all %}
-          <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ item.name }}">
+    {% for item in products %}
+    <div class="col-md-6 mb-4">  <!-- প্রতি row তে 2টা card -->
+      <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="row g-0">
+
+          <!-- Image Carousel -->
+          <div class="col-6">
+            {% if item.images.all %}
+            <div id="carousel{{ forloop.counter }}" class="carousel slide" data-bs-ride="carousel">
+
+              <div class="carousel-inner">
+                {% for img in item.images.all %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                  <img src="{{ img.image.url }}"
+                       class="d-block w-100 rounded-start"
+                       style="height:180px; object-fit:cover;">
+                </div>
+                {% endfor %}
+              </div>
+
+              <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ forloop.counter }}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ forloop.counter }}" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+
+            </div>
+            {% else %}
+            <p class="text-center mt-5">No image</p>
+            {% endif %}
           </div>
-          {% endfor %}
+
+          <!-- Product Details -->
+          <div class="col-6 d-flex align-items-center">
+            <div class="card-body">
+
+              <h5 class="card-title fw-bold">{{ item.name }}</h5>
+              <p class="text-muted mb-1">{{ item.subtitle }}</p>
+              {% if item.old_price %}
+        <span style="
+          font-size:18px;
+          color:#888;
+          text-decoration: line-through;
+          margin-right:10px;
+        ">
+          BDT {{ item.old_price }}
+        </span>
+        {% endif %}
+
+              <p class="text-primary fs-6 fw-bold">BDT {{ item.price }}</p>
+
+              <div class="text-center mt-2">
+                <a href="{% url 'product_detail' pk=item.pk %}?product={{ item.id }}"
+                   class="btn btn-primary btn-sm px-3">
+                  View Details
+                </a>
+              </div>
+
+            </div>
+          </div>
+
         </div>
 
-        <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ forloop.counter }}" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ forloop.counter }}" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-
-      <!-- Thumbnails -->
-      <div class="d-flex mt-2 justify-content-center">
-        {% for img in item.images.all %}
-        <img src="{{ img.image.url }}" class="img-thumbnail mx-1" style="width:60px; cursor:pointer;" onclick="document.querySelector('#carousel{{ forloop.parentloop.counter }} .carousel-inner .active').classList.remove('active'); this.parentElement.parentElement.querySelector('.carousel-inner').children[{{ forloop.counter0 }}].classList.add('active');" >
-        {% endfor %}
-      </div>
-      {% else %}
-        <p>No images uploaded for this product.</p>
-      {% endif %}
-    </div>
-
-    <!-- Product Details -->
-    <div class="col-md-6">
-      <div class="card-body">
-        <h3 class="card-title">{{ item.name }}</h3>
-        <h6 class="card-text">{{ item.subtitle }}</h6>
-        <p class="card-text"><small class="text-body-secondary">Last updated {{ item.uploaded_at }}</small></p>
-        <p class="card-text"><strong>Price: BDT {{ item.price }}</strong></p>
-        
       </div>
     </div>
-          
-            <div class="d-grid gap-2">
-              <div class="mb-2">
-              <div class="text-center">
-              <a href="{% url "product_detail" pk=item.pk %}?product={{ item.id }}" class="btn btn-primary">View Details</a>
-              </div>
-              </div>
-            </div>
-          <br>
+    {% endfor %}
+
   </div>
-</div>
-{% endfor %}
-</div>
 </div>
 
 {% endblock %}

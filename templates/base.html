@@ -21,18 +21,23 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
   <div class="container-fluid">
      <img src="{% static 'image/logo.png' %}" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
+ <ul class="navbar-nav flex-row">
+  <li class="nav-item" style="list-style: none; margin-right: 50px; font-size:20px; font-weight: bold;">
+    <a class="nav-link active" aria-current="page" href="{% url 'product_list' %}">Home</a>
+  </li>
+  <li class="nav-item" style="list-style: none; font-size:20px; font-weight: bold;">
+    <a class="nav-link active" href="https://wa.me/+8801876393697">Contact Us</a>
+  </li>
+</ul>
+
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'product_list' %}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="https://wa.me/+8801876393697">Contact Us</a>
-        </li>
+       
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
@@ -88,13 +93,13 @@
             </a>
 
             <!-- Facebook Icon -->
-            <a href="https://facebook.com/yourpage" target="_blank" 
+            <a href="https://www.facebook.com/share/1Bk8LdVDBn/" target="_blank" 
                class="text-light mx-2" style="font-size:28px;">
                 <i class="fab fa-facebook"></i>
             </a>
 
             <!-- TikTok Icon -->
-            <a href="#" target="_blank" 
+            <a href="https://www.tiktok.com/@kids_items_shop?_r=1&_d=secCgYIASAHKAESPgo8T%2BYOpUTNyTIORHmKh1hclYy3wM2f%2B2aRj4Ky63c9ODMTYPRACZha%2FTxjzayOJgB5p1jcjoUbtwRihoeiGgA%3D&_svg=1&checksum=ad19495b12c07ef3c2a9915aa92671fba2c6e2bdda48a6a5b90af191d43bd71c&item_author_type=1&sec_uid=MS4wLjABAAAA3l__aMArEAsBT76xdhas79tGAvg9Pa5qRZWZ_aQmXTXd4Axc4vgvyEKwADUWdKmr&sec_user_id=MS4wLjABAAAA3l__aMArEAsBT76xdhas79tGAvg9Pa5qRZWZ_aQmXTXd4Axc4vgvyEKwADUWdKmr&share_app_id=1233&share_author_id=7562375490062550032&share_link_id=0394b1f0-56c1-4d24-9094-8efc3c240450&share_region=BD&share_scene=1&sharer_language=en&social_share_type=5&source=h5_m&timestamp=1764825274&u_code=f01l413987l5kd&ug_btm=b8727%2Cb7360&ugbiz_name=ACCOUNT&user_id=7562375490062550032&utm_campaign=client_share&utm_medium=android&utm_source=copy" target="_blank"
                class="text-light mx-2" style="font-size:28px;">
                 <i class="fab fa-tiktok"></i>
             </a>
