@@ -12,11 +12,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ---------------------------
 SECRET_KEY = "django-insecure-key"
 DEBUG = False
-ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://*.up.railway.app/",
-]
+ALLOWED_HOSTS = ['kidsitemsshop.pythonanywhere.com']
+
+CSRF_TRUSTED_ORIGINS = ['https://kidsitemsshop.pythonanywhere.com']
+
+
 
 # ---------------------------
 # INSTALLED APPS
